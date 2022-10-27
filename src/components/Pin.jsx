@@ -7,6 +7,7 @@ import { BsFillArrowUpRightCircleFill } from 'react-icons/bs';
 
 import { client, urlFor } from '../client';
 import { fetchUser } from '../utils/fetchUser';
+import { useEffect } from 'react';
 
 const Pin = ({ pin: { destination, image, postedBy, _id, save } }) => {
 	const [postHovered, setPostHovered] = useState(false);
@@ -44,9 +45,10 @@ const Pin = ({ pin: { destination, image, postedBy, _id, save } }) => {
 	};
 
 	const deletePin = (id) => {
-		client.delete(id).then(() => {
-			window.location.reload();
-		});
+		client.delete(id)
+			.then(() => {
+				window.location.reload();
+			});
 	};
 
 	return (
