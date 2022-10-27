@@ -3,40 +3,43 @@ import { useNavigate } from 'react-router-dom';
 import { shareVideo, logoWhite } from '../assets';
 import jwt_decode from 'jwt-decode';
 import { client } from '../client';
+import { useState } from 'react';
 
 const Login = () => {
+	const [userObject, setUserObject] = useState(null)
 	const navigate = useNavigate();
 
-	const handleCallbackResponse = (response) => {
-		const userObject = jwt_decode(response.credential);
+	
+	const handleCallbackResponse = async (response) => {
+		setUserObject(jwt_decode(response.credential));
 		localStorage.setItem('user', JSON.stringify(userObject));
-
-		const { name, sub, picture } = userObject;
+		
+		// const { name, sub, picture } = userObject;
 		const doc = {
-			_id: sub,
+			_id: userObject.sub,
 			_type: 'user',
-			userName: name,
-			image: picture,
+			userName: userObject.name,
+			image: userObject.picture,
 		};
-
-		client.createIfNotExists(doc).then(() => {
+		
+		await client.createIfNotExists(doc).then(() => {
 			navigate('/', { replace: true });
 		});
 	};
-
+	
 	useEffect(() => {
 		/* global google */
 		google.accounts.id.initialize({
 			client_id: process.env.REACT_APP_GOOGLE_API_TOKEN,
 			callback: handleCallbackResponse,
 		});
-
+		
 		google.accounts.id.renderButton(document.getElementById('signinBtn'), {
 			theme: 'outline',
 			size: 'large',
 		});
 	}, []);
-
+	
 	return (
 		<div className='flex justify-start items-center flex-col h-screen'>
 			<div className='relative w-full h-full'>
