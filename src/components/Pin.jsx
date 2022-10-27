@@ -7,7 +7,6 @@ import { BsFillArrowUpRightCircleFill } from 'react-icons/bs';
 
 import { client, urlFor } from '../client';
 import { fetchUser } from '../utils/fetchUser';
-import { useEffect } from 'react';
 
 const Pin = ({ pin: { destination, image, postedBy, _id, save } }) => {
 	const [postHovered, setPostHovered] = useState(false);
