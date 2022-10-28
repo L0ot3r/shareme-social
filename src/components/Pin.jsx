@@ -15,7 +15,7 @@ const Pin = ({ pin: { destination, image, postedBy, _id, save } }) => {
 
 	const user = fetchUser();
 
-	const alreadySaved = !!save?.filter((item) => item.postedBy._id === user.sub)
+	const alreadySaved = !!save?.filter((item) => item.postedBy._id === user?.sub)
 		?.length;
 
 	const savePin = (id) => {
@@ -28,17 +28,17 @@ const Pin = ({ pin: { destination, image, postedBy, _id, save } }) => {
 				.insert('after', 'save[-1]', [
 					{
 						_key: nanoid(),
-						userId: user.sub,
+						userId: user?.sub,
 						postedBy: {
 							_type: 'postedBy',
-							_ref: user.sub,
+							_ref: user?.sub,
 						},
 					},
 				])
 				.commit()
 				.then(() => {
-					window.location.reload();
 					setSavingPost(false);
+					window.location.reload();
 				});
 		}
 	};
