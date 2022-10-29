@@ -81,7 +81,7 @@ const UserProfile = () => {
 							{user.userName}
 						</h1>
 						<div className='absolute top-0 z-1 right-0 p-2'>
-							{userId === user?._id && (
+							{userId === user?._id ? (
 								<button
 									type='button'
 									className='bg-white p-2 rounded-full cursor-pointer outline-none shadow-md'
@@ -89,7 +89,7 @@ const UserProfile = () => {
 								>
 									<AiOutlineLogout color='red' fontSize={21} />
 								</button>
-							)}
+							) : null}
 						</div>
 					</div>
 					<div className='text-center mb-7'>
