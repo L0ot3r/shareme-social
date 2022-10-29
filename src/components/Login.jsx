@@ -5,6 +5,7 @@ import { shareVideo, logoWhite } from '../assets';
 import jwt_decode from 'jwt-decode';
 
 import { client } from '../client';
+import { GoogleLogin } from '@react-oauth/google';
 
 const Login = () => {
 	const navigate = useNavigate();
@@ -13,34 +14,18 @@ const Login = () => {
 		const userObject = jwt_decode(response.credential);
 		localStorage.setItem('user', JSON.stringify(userObject));
 
-		const { name, sub, picture } = userObject
+		const { name, sub, picture } = userObject;
 		const doc = {
 			_type: 'user',
 			_id: sub,
 			userName: name,
 			image: picture,
 		};
-	
+
 		client.createIfNotExists(doc).then(() => {
 			navigate('/', { replace: true });
 		});
 	};
-
-	useEffect(() => {
-		/* global google */
-		if (window.google) {
-			google.accounts.id.initialize({
-				client_id: process.env.REACT_APP_GOOGLE_API_TOKEN,
-				callback: handleCallbackResponse,
-			});
-		}
-
-		google.accounts.id.renderButton(document.getElementById('signinBtn'), {
-			theme: 'outline',
-			size: 'large',
-			shape: 'pill',
-		})
-	}, []);
 
 	return (
 		<div className='flex justify-start items-center flex-col h-screen'>
@@ -59,7 +44,13 @@ const Login = () => {
 						<img src={logoWhite} alt='logo' width='130px' />
 					</div>
 					<div className='shadow-2xl'>
-						<button id='signinBtn' type='button'></button>
+						<GoogleLogin
+							onSuccess={handleCallbackResponse}
+							onError={(err) => {
+								console.log(err);
+							}}
+							shape='pill'
+						/>
 					</div>
 				</div>
 			</div>

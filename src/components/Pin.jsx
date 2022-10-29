@@ -15,8 +15,8 @@ const Pin = ({ pin: { destination, image, postedBy, _id, save } }) => {
 
 	const user = fetchUser();
 
-	const alreadySaved = !!save?.filter((item) => item.postedBy._id === user?.sub)
-		?.length;
+	const alreadySaved = !!(save?.filter((item) => item.postedBy._id === user?.sub)
+		?.length);
 
 	const savePin = (id) => {
 		if (!alreadySaved) {
@@ -39,7 +39,7 @@ const Pin = ({ pin: { destination, image, postedBy, _id, save } }) => {
 				.then(() => {
 					setSavingPost(false);
 					window.location.reload();
-				});
+				})
 		}
 	};
 
@@ -108,9 +108,9 @@ const Pin = ({ pin: { destination, image, postedBy, _id, save } }) => {
 									className='bg-white flex items-center gap-2 text-black font-bold py-2 px-4 rounded-full opacity-70 hover:opacity-100 hover:shadow-md'
 								>
 									<BsFillArrowUpRightCircleFill />
-									{destination.length > 20
-										? destination.slice(8, 15)
-										: destination.slice(8)}
+									{destination.length > 15
+										? `${destination.slice(0, 15)}...`
+										: destination}
 								</a>
 							)}
 							{postedBy?._id === user?.sub && (

@@ -31,6 +31,8 @@ const Feed = () => {
 
   if(loading) return <Spinner message='Nous ajoutons de nouvelles idées à votre fil !' />
 
+  if(!pins?.length) return <h2 className='text-center mt-7 text-3xl font-bold'>Il n'y rien à vous montrer ici 😕</h2>
+
   return (
     <div>
       {pins && <MasonryLayout pins={pins} />}
