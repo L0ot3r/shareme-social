@@ -29,12 +29,11 @@ const UserProfile = () => {
 	const navigate = useNavigate();
 	const { userId } = useParams();
 
-	const currentUser = fetchUser()
+	const currentUser = fetchUser();
 
-	
 	useEffect(() => {
 		const query = userQuery(userId);
-		
+
 		client.fetch(query).then((data) => {
 			setUser(data[0]);
 		});
@@ -127,10 +126,12 @@ const UserProfile = () => {
 							<MasonryLayout pins={pins} />
 						</div>
 					) : (
-            <div className='w-full text-center'>
-              <h2 className='font-bold text-2xl mt-2'>Nous n'avons rien trouvé :(</h2>
-            </div>
-          )}
+						<div className='w-full text-center'>
+							<h2 className='font-bold text-2xl mt-2'>
+								Nous n'avons rien trouvé :(
+							</h2>
+						</div>
+					)}
 				</div>
 			</div>
 		</div>

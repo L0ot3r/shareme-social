@@ -15,8 +15,9 @@ const Pin = ({ pin: { destination, image, postedBy, _id, save } }) => {
 
 	const user = fetchUser();
 
-	const alreadySaved = !!(save?.filter((item) => item.postedBy?._id === user?.sub)
-		?.length);
+	const alreadySaved = !!save?.filter(
+		(item) => item.postedBy?._id === user?.sub
+	)?.length;
 
 	const savePin = (id) => {
 		if (!alreadySaved) {
@@ -39,15 +40,14 @@ const Pin = ({ pin: { destination, image, postedBy, _id, save } }) => {
 				.then(() => {
 					setSavingPost(false);
 					window.location.reload();
-				})
+				});
 		}
 	};
 
 	const deletePin = (id) => {
-		client.delete(id)
-			.then(() => {
-				window.location.reload();
-			});
+		client.delete(id).then(() => {
+			window.location.reload();
+		});
 	};
 
 	return (
