@@ -46,9 +46,10 @@ const Pin = ({ pin: { destination, image, postedBy, _id, save } }) => {
 
 	const deletePin = (id) => {
 		client.delete(id).then(() => {
-			window.location.reload();
+			navigate('/')
 		});
 	};
+
 
 	return (
 		<div className='m-2'>

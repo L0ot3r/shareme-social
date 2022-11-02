@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { client } from '../client';
 import Spinner from './Spinner';
-import { categories } from '../utils/data';
+import { categories, feedQuery } from '../utils/data';
 
 const CreatePin = ({ user }) => {
 	const [title, setTitle] = useState('');
@@ -73,6 +73,9 @@ const CreatePin = ({ user }) => {
 
 			client.create(doc).then(() => {
 				navigate('/');
+				client.fetch(feedQuery).then(() => {
+					window.location.reload()
+				})
 			});
 		} else {
 			setFields(true);
